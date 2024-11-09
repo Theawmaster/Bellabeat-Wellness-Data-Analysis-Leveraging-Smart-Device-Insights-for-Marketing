@@ -18,7 +18,7 @@ This project includes a comprehensive set of deliverables:
 
 ## Project Structure:
 
-* /documentation
+* [/documentation]
   * Contains the documentation report that explains each stage of the project, data sources, cleaning steps, and key findings.
 * /notebooks
   * Bellabeat_Analysis.Rmd - R Notebook where data preprocessing, analysis, and visualization code is organized into modular sections.
