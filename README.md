@@ -65,9 +65,9 @@ This project includes a comprehensive set of deliverables:
 ### To explore this project:
 
 1. Clone this repository.
-2. Navigate to > /notebooks to review the analysis steps in the R Notebook.
-3. Review the > /documentation and > /presentation folders for reports and slides summarizing key findings.
-4. Watch the video presentation in > /presentation for an overview of the analysis and its implications.
+2. Navigate to /notebooks to review the analysis steps in the R Notebook.
+3. Review the /documentation and /presentation folders for reports and slides summarizing key findings.
+4. Watch the video presentation in /presentation for an overview of the analysis and its implications.
 
 ---
 
