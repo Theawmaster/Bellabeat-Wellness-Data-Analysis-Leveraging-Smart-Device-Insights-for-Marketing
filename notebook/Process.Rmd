@@ -1,0 +1,24 @@
+---
+title: "Fitbit Data Analysis Processing"
+author: "Alvin Aw Yong"
+date: "2024-11-04"
+output: html_document
+---
+
+# Process
+
+## Setup
+
+```{r setup, include=FALSE}
+# Install necessary packages if not already installed
+if (!require(dplyr)) install.packages("dplyr")
+if (!require(ggplot2)) install.packages("ggplot2")
+if (!require(tidyverse)) install.packages("tidyverse")
+if (!require(scales)) install.packages("scales")
+
+# Load libraries
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(scales)
+```
