@@ -8,11 +8,11 @@ Welcome to the Bellabeat case study project, where I explore how the wellness te
 
 This project includes a comprehensive set of deliverables:
 
-**1. Documentation Report:** Overview of the entire data analysis process, from defining business goals to generating actionable insights.
-**2. R Notebook:** Code chunks detailing the steps for data processing and analysis.
-**3. Visualizations:** Graphs and charts that illustrate key findings and trends.
-**4. Presentation Slides:** Summary of the project findings and recommendations.
-**5. Video Presentation:** A walkthrough of the project, including methods, results, and implications.
+1. Documentation Report: Overview of the entire data analysis process, from defining business goals to generating actionable insights.
+2. R Notebook: Code chunks detailing the steps for data processing and analysis.
+3. Visualizations: Graphs and charts that illustrate key findings and trends.
+4. Presentation Slides: Summary of the project findings and recommendations.
+5. Video Presentation: A walkthrough of the project, including methods, results, and implications.
 
 ---
 
