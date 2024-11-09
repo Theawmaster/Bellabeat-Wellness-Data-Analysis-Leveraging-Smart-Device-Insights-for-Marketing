@@ -4,7 +4,7 @@
 ---
 
 ## Project Overview: 
-Welcome to the Bellabeat case study project, where we explore how the wellness technology company Bellabeat can leverage data insights to improve its marketing strategy. In this project, we analyze fitness device data, draw insights about consumer behavior, and offer strategic recommendations to support Bellabeat’s growth in the wellness and smart device market.
+Welcome to the Bellabeat case study project, where I explore how the wellness technology company Bellabeat can leverage data insights to improve its marketing strategy. In this project, I analyze fitness device data, draw insights about consumer behavior, and offer strategic recommendations to support Bellabeat’s growth in the wellness and smart device market.
 
 This project includes a comprehensive set of deliverables:
 
