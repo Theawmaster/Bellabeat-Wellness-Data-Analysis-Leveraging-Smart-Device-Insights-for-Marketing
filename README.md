@@ -27,7 +27,7 @@ This project includes a comprehensive set of deliverables:
 * [/presentation](https://github.com/Theawmaster/Bellabeat-Wellness-Data-Analysis-Leveraging-Smart-Device-Insights-for-Marketing/tree/main/presentation)
   * PowerPoint slides summarizing the project and presenting strategic recommendations.
   * A video recording providing an overview of the project and a visual walk-through of key insights.
-    * In the case it is not viewable in github view [here](https://entuedu-my.sharepoint.com/:v:/r/personal/aawyong001_e_ntu_edu_sg/Documents/Recordings/BellaBeat%20Sharing-20241109_145615-Meeting%20Recording.mp4?csf=1&web=1&e=2TPunW&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
+    * In the case it is not viewable in github view [here]([https://entuedu-my.sharepoint.com/:v:/r/personal/aawyong001_e_ntu_edu_sg/Documents/Recordings/BellaBeat%20Sharing-20241109_145615-Meeting%20Recording.mp4?csf=1&web=1&e=2TPunW&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D](https://drive.google.com/file/d/10M48h5GPJPdLuZb3OcoiRex4rsqaahIq/view?usp=drive_link))
 
 ---
 
