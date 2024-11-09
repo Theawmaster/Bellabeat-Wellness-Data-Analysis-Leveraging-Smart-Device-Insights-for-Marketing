@@ -27,7 +27,7 @@ This project includes a comprehensive set of deliverables:
 * [/presentation](https://github.com/Theawmaster/Bellabeat-Wellness-Data-Analysis-Leveraging-Smart-Device-Insights-for-Marketing/tree/main/presentation)
   * PowerPoint slides summarizing the project and presenting strategic recommendations.
   * A video recording providing an overview of the project and a visual walk-through of key insights.
-    * In the case it is not viewable in github view [here](https://drive.google.com/file/d/10M48h5GPJPdLuZb3OcoiRex4rsqaahIq/view?usp=drive_link)
+    * In the case it is not viewable in github, view [here](https://drive.google.com/file/d/10M48h5GPJPdLuZb3OcoiRex4rsqaahIq/view?usp=drive_link)
 
 ---
 
