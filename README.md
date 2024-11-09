@@ -33,7 +33,7 @@ This project includes a comprehensive set of deliverables:
 
 ## Case Study Background
 
-### Bellabeat is a high-tech company that manufactures wellness-focused smart devices for women. This study is part of Bellabeat's initiative to understand user habits and preferences through data analysis, thereby informing marketing strategies and fostering user engagement. Using a dataset from the Fitbit fitness tracker (available via Kaggle), the analysis examines daily activity, sleep, heart rate, and hydration patterns, with the following objectives:
+### Bellabeat is a high-tech company that manufactures wellness-focused smart devices for women. This study is part of Bellabeat's initiative to understand user habits and preferences through data analysis, thereby informing marketing strategies and fostering user engagement. Using a dataset from the Fitbit fitness tracker (available via Kaggle), the analysis examines daily activity, sleep, heart rate, daily steps and calories, with the following objectives:
 
 1. Identify patterns in smart device usage.
 2. Draw parallels between Fitbit user trends and potential Bellabeat users.
