@@ -22,3 +22,214 @@ library(ggplot2)
 library(tidyr)
 library(scales)
 ```
+
+## Setting working directory
+
+```{r setting working directory}
+# Set working directory 
+setwd("/cloud/project/Fitabase Data 3.12.16-4.11.16")
+
+# Optionally confirm the working directory
+getwd()
+```
+
+## Import Data
+
+```{r Importing Data}
+# Import CSV files
+daily_activity <- read.csv("dailyActivity_merged.csv")
+daily_calorie <- read.csv("dailyCalories_merged.csv")
+sleep_data <- read.csv("sleepDay_merged.csv")
+daily_step <- read.csv("dailySteps_merged.csv")
+heart_rate <- read.csv("heartrate_seconds_merged.csv")
+daily_intensity <- read.csv("dailyIntensities_merged.csv")
+
+# Display the first few rows of each dataset to confirm successful import
+list(
+  daily_activity = head(daily_activity),
+  daily_calorie = head(daily_calorie),
+  sleep_data = head(sleep_data),
+  daily_step = head(daily_step),
+  heart_rate = head(heart_rate),
+  daily_intensity = head(daily_intensity)
+  
+)
+```
+
+## Inspect Data
+
+``` {r Summary of Data}
+# Print a header and summary for daily_activity
+cat("\t\tDaily Activity\n\n")
+summary(daily_activity)
+cat("_____________________________________________________________\n\n")
+
+# Print a header and summary for sleep_data
+cat("\t\tSleep Data\n\n")
+summary(sleep_data)
+cat("_____________________________________________________________\n\n")
+
+# Print a header and summary for daily_calorie
+cat("\t\tDaily Calorie\n\n")
+summary(daily_calorie)
+cat("_____________________________________________________________\n\n")
+
+# Print a header and summary for daily_intensity
+cat("\t\tDaily Intensity\n\n")
+summary(daily_intensity)
+cat("_____________________________________________________________\n\n")
+
+# Print a header and summary for heart_rate
+cat("\t\tHeart Rate\n\n")
+summary(heart_rate)
+cat("_____________________________________________________________\n\n")
+
+# Print a header and summary for daily_step
+cat("\t\tDaily Step\n\n")
+summary(daily_step)
+cat("_____________________________________________________________\n\n")
+```
+
+## Data cleaning
+
+``` {r Check for missing values and remove if minimal}
+# Drop missing values like NA 
+daily_activity <- daily_activity %>% drop_na()
+sleep_data <- sleep_data %>% drop_na()
+heart_rate <- heart_rate %>% drop_na()
+daily_calorie <- daily_calorie %>% drop_na()
+daily_intensity <- daily_intensity %>% drop_na()
+daily_step <- daily_step %>% drop_na()
+```
+
+``` {r Standardize naming conventions to lower case and remove whitespaces}  
+# Make all column name in the same format
+colnames(daily_activity) <- tolower(gsub(" ", "_", colnames(daily_activity)))
+colnames(sleep_data) <- tolower(gsub(" ", "_", colnames(sleep_data)))
+colnames(daily_intensity) <- tolower(gsub(" ", "_", colnames(daily_intensity)))
+colnames(heart_rate) <- tolower(gsub(" ", "_", colnames(heart_rate)))
+colnames(daily_calorie) <- tolower(gsub(" ", "_", colnames(daily_calorie)))
+colnames(daily_step) <- tolower(gsub(" ", "_", colnames(daily_step)))
+
+# Display output
+colnames(daily_activity)
+colnames(daily_calorie)
+colnames(daily_intensity)
+colnames(daily_step)
+colnames(heart_rate)
+colnames(sleep_data)
+
+```
+
+``` {r Convert date/day/time columns to standard format}
+# Standardize date format
+if ("activityday" %in% colnames(daily_activity)) {
+  daily_activity[["activityday"]] <- as.Date(daily_activity[["activityday"]], format="%m/%d/%Y")
+}
+if ("activityday" %in% colnames(daily_calorie)) {
+  daily_calorie[["activityday"]] <- as.Date(daily_calorie[["activityday"]], format="%m/%d/%Y")
+}
+if ("activityday" %in% colnames(daily_intensity)) {
+  daily_intensity[["activityday"]] <- as.Date(daily_intensity[["activityday"]], format="%m/%d/%Y")
+}
+if ("activityday" %in% colnames(daily_step)) {
+  daily_step[["activityday"]] <- as.Date(daily_step[["activityday"]], format="%m/%d/%Y")
+}
+if ("sleepday" %in% colnames(sleep_data)) {
+  sleep_data[["activityday"]] <- as.Date(sleep_data[["sleepday"]], format="%m/%d/%Y")
+}
+if ("time" %in% colnames(heart_rate)) {
+  heart_rate[["activityday"]] <- as.Date(heart_rate[["time"]], format="%m/%d/%Y")
+}
+
+```
+
+```{r Remove duplicate entries}
+daily_activity <- daily_activity %>% distinct()
+daily_calorie <- daily_calorie %>% distinct()
+daily_intensity <- daily_intensity %>% distinct()
+daily_step <- daily_step %>% distinct()
+heart_rate <- heart_rate %>% distinct()
+sleep_data <- sleep_data %>% distinct()
+```
+
+## Data Integration
+
+``` {r Standardizing column names for merging}
+colnames(daily_activity)[colnames(daily_activity) == "activitydate"] <- "activityday"
+colnames(daily_calorie)[colnames(daily_calorie) == "activityday"] <- "activityday"
+colnames(daily_intensity)[colnames(daily_intensity) == "activityday"] <- "activityday"
+colnames(daily_step)[colnames(daily_step) == "activityday"] <- "activityday"
+colnames(heart_rate)[colnames(heart_rate) == "time"] <- "activityday"
+colnames(sleep_data)[colnames(sleep_data) == "activityday"] <- "activityday"
+
+# Display output
+colnames(daily_activity)
+colnames(daily_calorie)
+colnames(daily_intensity)
+colnames(daily_step)
+colnames(heart_rate)
+colnames(sleep_data)
+```
+``` {r last minute clean up}
+# For some reason daily_activity and heart rate activityday format is chr so have to change to date
+daily_activity$activityday <- as.Date(daily_activity$activityday, format = "%m/%d/%Y")
+heart_rate$activityday <- as.Date(heart_rate$activityday, format = "%m/%d/%Y")
+
+# Rename duplicate columns in heart_rate and sleep_data
+colnames(heart_rate)[which(colnames(heart_rate) == "activityday")[2]] <- "time"
+colnames(sleep_data)[which(colnames(sleep_data) == "activityday")[2]] <- "activityday_sleep"
+```
+
+## Merge data incrementally
+
+``` {r Merge daily calorie}
+merged_data <- daily_activity %>%
+  left_join(daily_calorie, by = c("id", "activityday"))
+```
+
+``` {r merge daily intensity}
+merged_data <- merged_data %>%
+  left_join(daily_intensity, by = c("id", "activityday"))
+```
+
+``` {r merge daily step}
+merged_data <- merged_data %>%
+  left_join(daily_step, by = c("id", "activityday"))
+```
+
+``` {r merge heart rate}
+# (ignoring 'time' column here since it's a daily aggregation)
+heart_rate_daily <- heart_rate %>%
+  filter(!is.na(value)) %>%             # Remove NA values if there are any
+  group_by(id, activityday) %>%
+  summarize(avg_heart_rate = mean(value, na.rm = TRUE)) %>%
+  ungroup()
+
+# Join heart_rate after aggregation
+merged_data <- merged_data %>%
+  left_join(heart_rate_daily, by = c("id", "activityday"))
+
+# Safety precaution
+merged_data <- merged_data %>%
+  mutate(avg_heart_rate = ifelse(is.na(avg_heart_rate), mean(avg_heart_rate, na.rm = TRUE), avg_heart_rate))
+
+```
+
+``` {r merge sleep data}
+merged_data <- merged_data %>%
+  left_join(sleep_data, by = c("id", "activityday"))
+```
+
+``` {r Display merged data results}
+# Display the structure of the final integrated dataset
+str(merged_data)
+```
+
+
+## Write the data into a new csv file for further analysis
+
+``` {r Export data into CSV}
+write_csv(merged_data, "cleaned_integrated_data.csv")
+cat("Data cleaning and integration complete. Cleaned data saved as 'cleaned_integrated_data.csv'.")
+```

@@ -1,0 +1,210 @@
+---
+title: "case study 2 Analyzing"
+author: "Alvin Aw Yong"
+date: "2024-11-06"
+output: html_document
+---
+
+# Analyze Overview
+
+## Load libriaries
+
+```{r setup, include=FALSE}
+# Install necessary packages if not already installed
+if (!require(dplyr)) install.packages("dplyr")
+if (!require(ggplot2)) install.packages("ggplot2")
+if (!require(tidyverse)) install.packages("tidyverse")
+if (!require(scales)) install.packages("scales")
+if (!require(lubridate)) install.packages("lubridate")
+if (!require(reshape2)) install.packages("reshape2")
+
+# Load libraries
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(scales)
+library(lubridate)
+library(reshape2)
+```
+
+## Setting working directory
+
+```{r setting working directory}
+# Set working directory 
+setwd("/cloud/project/Fitabase Data 3.12.16-4.11.16")
+
+# Optionally confirm the working directory
+getwd()
+```
+
+## Load merge data from cleaned data file
+
+``` {r load cleaned and merged data file}
+merged_data <- read.csv("cleaned_integrated_data.csv")
+```
+
+## Inspect data
+
+``` {r Explore and have an overview of the data set}
+# Check the structure of the dataset
+str(merged_data)
+
+# Get a summary of the dataset
+summary(merged_data)
+
+# Check the first few rows of the dataset
+head(merged_data)
+
+# Check for missing values
+sum(is.na(merged_data))
+
+# Get a quick overview of key statistics like mean, min, max
+summary(merged_data$totalsteps)
+summary(merged_data$calories.x)
+```
+
+## Cleaning and transforming
+
+``` {r Remove NA values}
+# Remove rows with NA values in specific columns
+merged_data_clean <- na.omit(merged_data)
+```
+
+``` {r Replace NA values in 'totalsteps'}
+# Replace NAs with the mean value in `totalsteps`
+merged_data$totalsteps[is.na(merged_data$totalsteps)] <- mean(merged_data$totalsteps, na.rm = TRUE)
+```
+
+``` {r Format dates}
+# Convert activityday and sleepday to Date type
+merged_data$activityday <- as.Date(merged_data$activityday, format="%Y-%m-%d")
+merged_data$sleepday <- as.Date(merged_data$sleepday, format="%m/%d/%Y")
+```
+
+# Analyze - Steps and Calories
+
+## Perform calculations
+
+``` {r Calculate}
+# Calculate the total number of steps per month (aggregated by month_year)
+merged_data$month_year <- format(merged_data$activityday, "%Y-%m")
+monthly_steps <- merged_data %>%
+  group_by(month_year) %>%
+  summarise(steptotal = sum(steptotal, na.rm = TRUE), 
+            average_steps = mean(steptotal, na.rm = TRUE))
+
+# Calculate the average calories burned per day
+average_calories <- mean(merged_data$calories.x, na.rm = TRUE)
+
+# Add new columns for the difference between steps and calories burned
+merged_data <- merged_data %>%
+  mutate(steps_to_calories_ratio = totalsteps / calories.x)
+```
+
+## Identify trends and relationship
+
+``` {r Visual} 
+# Plot the distribution of steps taken
+ggplot(merged_data, aes(x=totalsteps)) +
+  geom_histogram(bins=30, fill="skyblue", color="black") +
+  labs(title="Distribution of Steps Taken", x="Total Steps", y="Frequency")
+
+# Scatter plot between steps and calories burned with trendline
+ggplot(merged_data, aes(x = totalsteps, y = calories.x)) +
+  geom_point(color = "blue") +  # Scatterplot points
+  geom_smooth(method = "lm", se = FALSE, color = "red") +  # Linear trendline
+  labs(title = "Steps vs Calories Burned", x = "Total Steps", y = "Calories Burned") +
+  theme_minimal()  # Optional: for cleaner aesthetics
+
+# Calculate correlation between total steps and calories burned
+cor(merged_data$totalsteps, merged_data$calories.x, use="complete.obs")
+```
+
+## Futher investigation
+
+``` {r Explore interesting trends}
+# Scatter plot for active minutes vs calories burned with trendline
+ggplot(merged_data, aes(x = veryactiveminutes.x, y = calories.x)) +
+  geom_point(color = "blue") +  # Scatterplot points
+  geom_smooth(method = "lm", se = FALSE, color = "red") +  # Linear trendline
+  labs(title = "Active Minutes vs Calories Burned", x = "Active Minutes", y = "Calories Burned") +
+  theme_minimal()  # Optional: for cleaner aesthetics
+
+# Calculate the correlation between active minutes and calories burned
+cor(merged_data$veryactiveminutes.x, merged_data$calories.x, use="complete.obs")
+```
+
+# Analyze - Explore Additional Relationships
+
+## Correlation Heatmap of Health Metrics
+
+``` {r Heatmap correlation}
+
+# Select and rename relevant numeric columns for the correlation matrix
+numeric_cols <- merged_data %>%
+  select(
+    Total_Steps = totalsteps,
+    Sedentary_Minutes = sedentaryminutes.x,
+    Calories_Burned = calories.x,
+    Sleep_Minutes = totalminutesasleep,
+    Very_Active_Minutes = veryactiveminutes.x,
+    Avg_Heart_Rate = avg_heart_rate
+  )
+
+# Calculate the correlation matrix
+cor_matrix <- cor(numeric_cols, use = "complete.obs")
+
+# Melt the correlation matrix for ggplot
+melted_cor_matrix <- melt(cor_matrix)
+
+# Plot the heatmap with improved readability
+ggplot(data = melted_cor_matrix, aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(
+    low = "blue", high = "red", mid = "white",
+    midpoint = 0, limit = c(-1, 1), name = "Correlation"
+  ) +
+  labs(title = "Correlation Heatmap of Health Metrics", x = "", y = "") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+    axis.text.y = element_text(size = 10),
+    plot.title = element_text(hjust = 0.5)
+  )
+```
+
+
+# Analyze - User Engagement
+
+## Step Challenge
+
+``` {r}
+# Define a step goal
+step_goal <- 10000
+
+# Create a new column to check if the goal was met
+merged_data$met_goal <- ifelse(merged_data$totalsteps >= step_goal, "Yes", "No")
+
+# Plot the number of days users met the step goal
+ggplot(merged_data, aes(x=activityday, fill=met_goal)) +
+  geom_bar() +
+  labs(title="Step Goal Completion", x="Date", y="Number of Days") +
+  scale_fill_manual(values = c("Yes" = "green", "No" = "red"))
+
+```
+
+## Monthly Reward Progress for Meeting Step Goals
+
+``` {r}
+# Plot with more vertical gridlines (e.g., every 2 weeks)
+ggplot(monthly_goal_met, aes(x = month_date, y = total_goal_met_days)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  geom_smooth(method = "loess", color = "darkblue", se = FALSE) + # Adding a trendline
+  labs(title = "Reward Progress - Goal Met Days per Month",
+       x = "Date of the Month",
+       y = "Total Goal Met Days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "2 weeks") + # More frequent x-axis labels
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
