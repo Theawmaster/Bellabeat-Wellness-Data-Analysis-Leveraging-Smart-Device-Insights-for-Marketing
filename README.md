@@ -20,14 +20,14 @@ This project includes a comprehensive set of deliverables:
 
 * [/documentation](https://github.com/Theawmaster/Bellabeat-Wellness-Data-Analysis-Leveraging-Smart-Device-Insights-for-Marketing/tree/main/doccumentation)
   * Contains the documentation report that explains each stage of the project, data sources, cleaning steps, and key findings.
-* /notebooks
-  * Bellabeat_Analysis.Rmd - R Notebook where data preprocessing, analysis, and visualization code is organized into modular sections.
-* /visualizations
+* [/notebooks](https://github.com/Theawmaster/Bellabeat-Wellness-Data-Analysis-Leveraging-Smart-Device-Insights-for-Marketing/tree/main/notebook)
+  * R Notebook where data preprocessing, analysis, and visualization code is organized into modular sections.
+* [/visualizations](https://github.com/Theawmaster/Bellabeat-Wellness-Data-Analysis-Leveraging-Smart-Device-Insights-for-Marketing/tree/main/visualizations)
   * Graphs, charts, and tables generated from the analysis, showing trends in user behavior and insights relevant to Bellabeat’s marketing.
-* /presentation
-  * Bellabeat_Case_Study_Slides.pptx - PowerPoint slides summarizing the project and presenting strategic recommendations.
-* /videos
-  * Bellabeat_Analysis_Presentation.mp4 - A video recording providing an overview of the project and a visual walk-through of key insights.
+* [/presentation](https://github.com/Theawmaster/Bellabeat-Wellness-Data-Analysis-Leveraging-Smart-Device-Insights-for-Marketing/tree/main/presentation)
+  * PowerPoint slides summarizing the project and presenting strategic recommendations.
+  * A video recording providing an overview of the project and a visual walk-through of key insights.
+    * In the case it is not viewable in github view [here](https://entuedu-my.sharepoint.com/:v:/r/personal/aawyong001_e_ntu_edu_sg/Documents/Recordings/BellaBeat%20Sharing-20241109_145615-Meeting%20Recording.mp4?csf=1&web=1&e=2TPunW&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
 
 ---
 
